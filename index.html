@@ -4,9 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Riff Quest</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#1a1a1a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
+  @font-face{font-family:"Press Start 2P";src:url("fonts/press-start-2p.woff2") format("woff2");font-display:swap}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
   html,body{margin:0;height:100%;background:#1a1a1a;color:#ececec;font-family:"Press Start 2P",monospace;overflow:hidden;touch-action:none}
   #shell{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:10px;gap:14px}
@@ -704,6 +710,9 @@ function frame(t){
   requestAnimationFrame(frame);
 }
 hasSave=!!loadSave();
+if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost') && window.top===window.self){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
 (document.fonts?document.fonts.load('8px "Press Start 2P"').catch(()=>{}):Promise.resolve()).finally(()=>requestAnimationFrame(frame));
 </script>
 </body>
